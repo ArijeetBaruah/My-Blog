@@ -11,31 +11,22 @@ class NavBarContainer extends Component{
     props.onAuthStateChanged();
   }
 
-  handleOnClickLogin(){
+  handleOnClickLogin(url){
     const { user } = this.props.auth;
     if (user.user) {
       this.props.Logout();
       return;
     }
-    this.props.LoginViaGoogle();
+    window.location.hash = url;
   }
 
   render() {
     const { user } = this.props.auth;
-    if (!user) {
-      return (
-        <div>Loading...</div>
-      );
-    }
-    if (user.isLoading) {
-      return (
-        <div>Loading...</div>
-      );
-    }
-
+    
     return (
       <NavBar
         Login={this.handleOnClickLogin}
+        isLoading={user.isLoading}
         user={user.user}
         />
     );

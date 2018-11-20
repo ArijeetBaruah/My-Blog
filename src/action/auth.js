@@ -14,6 +14,19 @@ export default class AuthAction{
     }
   }
 
+  static LoginViaForm(dispatch, user, pass) {
+    Firebase.LoginViaForm(user, pass)
+      .then(user => (
+        dispatch(AuthAction.SetUser({ isLoading: false, data: user }))
+      ))
+      .catch(error => (
+        dispatch(AuthAction.SetUser({ isLoading: false, error }))
+      ));
+    return {
+      type: 'AUTH_FORM_LOGIN',
+    }
+  }
+
   static onAuthStateChanged(dispatch) {
     Firebase.onAuthStateChanged((user) => {
       dispatch(AuthAction.SetUser({data: user}));

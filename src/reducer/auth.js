@@ -15,6 +15,11 @@ const authReducer = (state = initState, action) => {
       tmpState.user = action.payload;
       return tmpState;
     }
+    case 'AUTH_GOOGLE_LOGIN': {
+      const tmpState = _.assign({}, state);
+      tmpState.user.isLoading = true;
+      return tmpState;
+    }
     default: {
       return state;
     }
