@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import appContaints from '../util/appContaints';
 
@@ -9,18 +9,47 @@ class NavBar extends Component {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.Login = this.Login.bind(this);
+    this.getLinks = this.getLinks.bind(this);
   }
 
   handleOnClick(url) {
     window.location.hash = url;
   }
 
-  Login() {
-    this.props.Login();
+  Login(url) {
+    this.props.Login(url);
+  }
+
+  getLinks() {
+    const { user, isLoading } = this.props;
+    if (isLoading) {
+      return (
+        <Fragment />
+      );
+    }
+    return (
+      <Fragment>
+        <li>
+          <a
+            href={DEADLINK}
+            onClick={() => this.handleOnClick('/')}
+            >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href={DEADLINK}
+            onClick={() => this.Login('/login')}
+            >
+            {!user? 'Login' : 'Logout'}
+          </a>
+        </li>
+      </Fragment>  
+    );
   }
 
   render() {
-    const { user } = this.props;
     return (
       <nav>
         <div className="nav-wrapper">
@@ -31,25 +60,14 @@ class NavBar extends Component {
             >
               Logo
           </a>
+          <a href={DEADLINK} data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li>
-              <a
-                href={DEADLINK}
-                onClick={() => this.handleOnClick('/')}
-                >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href={DEADLINK}
-                onClick={this.Login}
-                >
-                {!user? 'Login' : 'Logout'}
-              </a>
-            </li>
+            {this.getLinks()}
           </ul>
-        </div>
+          <ul className="sidenav" id="mobile-demo">
+            {this.getLinks()}
+          </ul>
+          </div>
       </nav>
     );
   }

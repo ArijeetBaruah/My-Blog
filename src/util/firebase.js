@@ -17,6 +17,10 @@ export default class Firebase {
     return firebase.auth().signInWithPopup(googleAuthProvider);
   }
 
+  static LoginViaForm(email, pass) {
+    return firebase.auth().signInWithEmailAndPassword(email, pass);
+  }
+
   static onAuthStateChanged(callback) {
     return firebase.auth().onAuthStateChanged(user => callback(user));
   }
