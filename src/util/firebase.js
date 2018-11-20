@@ -12,10 +12,15 @@ const keys = {
 firebase.initializeApp(keys);
 
 export default class Firebase {
-  static Login() {
+  static LoginViaGoogle() {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(googleAuthProvider);
   }
+
+  static onAuthStateChanged(callback) {
+    return firebase.auth().onAuthStateChanged(user => callback(user));
+  }
+
   static Logout() {
     return firebase.auth().signOut()
   }
