@@ -1,7 +1,8 @@
 import React, { Component, Suspense } from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import NavBar from './NavBar';
+import NavBarContainer from '../container/navbar';
+import store from '../store';
 
 const Home = React.lazy(() => import('./home'));
 
@@ -11,8 +12,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
-        <Provider>
+        <Provider store={store}>
           <Router>
             <Switch>
               <Route
@@ -20,6 +20,7 @@ class App extends Component {
                 path="/"
                 component={() => (
                   <Suspense fallback={<Loading />}>
+                    <NavBarContainer />
                     <Home />
                   </Suspense>
                 )}

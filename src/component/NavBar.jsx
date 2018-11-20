@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import Firebase from '../util/firebase';
+import appContaints from '../util/appContaints';
 
-const DEADLINK = "javascript:void(0)";
+const { DEADLINK } = appContaints;
 
 class NavBar extends Component {
   constructor(props) {
@@ -16,11 +16,11 @@ class NavBar extends Component {
   }
 
   Login() {
-    console.log("jiji");
-    Firebase.Login();
+    this.props.Login();
   }
 
   render() {
+    const { user } = this.props;
     return (
       <nav>
         <div className="nav-wrapper">
@@ -45,7 +45,7 @@ class NavBar extends Component {
                 href={DEADLINK}
                 onClick={this.Login}
                 >
-                Login
+                {!user? 'Login' : 'Logout'}
               </a>
             </li>
           </ul>
