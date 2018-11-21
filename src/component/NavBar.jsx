@@ -1,6 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Sidenav } from 'materialize-css/dist/js/materialize';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+} from 'reactstrap';
 import appContaints from '../util/appContaints';
 
 const { DEADLINK } = appContaints;
@@ -11,6 +19,11 @@ class NavBar extends Component {
     this.handleOnClick = this.handleOnClick.bind(this);
     this.Login = this.Login.bind(this);
     this.getLinks = this.getLinks.bind(this);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
   }
 
   handleOnClick(url) {
@@ -19,13 +32,6 @@ class NavBar extends Component {
 
   Login(url) {
     this.props.Login(url);
-  }
-
-  componentDidMount() {
-    const sideNav = document.querySelectorAll('.sidenav');
-    Sidenav.init(sideNav, {
-      draggable: true,
-    });
   }
 
   getLinks() {
@@ -37,48 +43,44 @@ class NavBar extends Component {
     }
     return (
       <Fragment>
-        <li>
-          <a
+        <NavItem>
+          <NavLink
             href={DEADLINK}
             onClick={() => this.handleOnClick('/')}
             >
             Home
-          </a>
-        </li>
-        <li>
-          <a
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
             href={DEADLINK}
-            className="sidenav-close"
             onClick={() => this.Login('/login')}
             >
             {!user? 'Login' : 'Logout'}
-          </a>
-        </li>
+          </NavLink>
+        </NavItem>
       </Fragment>  
     );
   }
 
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
   render() {
     return (
-      <nav>
-        <div className="nav-wrapper">
-          <a
-            href={DEADLINK}
-            onClick={() => this.handleOnClick('/')}
-            className="brand-logo"
-            >
-              Logo
-          </a>
-          <a href={DEADLINK} data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
+      <Navbar color="dark" dark expand="md">
+        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
             {this.getLinks()}
-          </ul>
-          <ul className="sidenav" id="mobile-demo">
-            {this.getLinks()}
-          </ul>
-          </div>
-      </nav>
-    );
+          </Nav>
+        </Collapse>
+      </Navbar>
+      );
   }
 }
 export default NavBar;
