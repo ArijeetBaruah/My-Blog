@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
+import { Sidenav } from 'materialize-css/dist/js/materialize';
 import appContaints from '../util/appContaints';
 
 const { DEADLINK } = appContaints;
@@ -18,6 +19,13 @@ class NavBar extends Component {
 
   Login(url) {
     this.props.Login(url);
+  }
+
+  componentDidMount() {
+    const sideNav = document.querySelectorAll('.sidenav');
+    Sidenav.init(sideNav, {
+      draggable: true,
+    });
   }
 
   getLinks() {
@@ -40,6 +48,7 @@ class NavBar extends Component {
         <li>
           <a
             href={DEADLINK}
+            className="sidenav-close"
             onClick={() => this.Login('/login')}
             >
             {!user? 'Login' : 'Logout'}
