@@ -6,4 +6,4 @@ script:
 install:
   - npm install -g firebase-tools
 after_success:
-  - firebase deploy — project projectId — token $FIREBASE_TOKEN.
+  - firebase deploy — project rishithegamecreator-1054 — token $FIREBASE_TOKEN.
