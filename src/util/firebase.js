@@ -1,12 +1,12 @@
 import * as firebase from "firebase";
 
 const keys = {
-  apiKey: "AIzaSyCiVv-lcHSfVJteXkV-sZ4gQLfHmSRewdE",
-  authDomain: "my-blog-fa7e9.firebaseapp.com",
-  databaseURL: "https://my-blog-fa7e9.firebaseio.com",
-  projectId: "my-blog-fa7e9",
-  storageBucket: "my-blog-fa7e9.appspot.com",
-  messagingSenderId: "804263562597"
+  apiKey: "AIzaSyDB_B-chtnaDDlvThaGFYRw2MhEe3N-AAc",
+  authDomain: "rishithegamecreator-1054.firebaseapp.com",
+  databaseURL: "https://rishithegamecreator-1054.firebaseio.com",
+  projectId: "rishithegamecreator-1054",
+  storageBucket: "rishithegamecreator-1054.appspot.com",
+  messagingSenderId: "111029591174"
 };
 
 firebase.initializeApp(keys);
