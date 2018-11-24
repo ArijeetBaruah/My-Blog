@@ -6,6 +6,10 @@ const initState = {
     user: undefined,
     error: undefined,
   },
+  registerUser: {
+    isLoading: true,
+    error: undefined,
+  }
 };
 
 const authReducer = (state = initState, action) => {
@@ -18,6 +22,11 @@ const authReducer = (state = initState, action) => {
     case 'AUTH_GOOGLE_LOGIN': {
       const tmpState = _.assign({}, state);
       tmpState.user.isLoading = true;
+      return tmpState;
+    }
+    case 'REGISTER_USER': {
+      const tmpState = _.assign({}, state);
+      tmpState.registerUser = action.payload;
       return tmpState;
     }
     default: {

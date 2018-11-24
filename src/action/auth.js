@@ -36,6 +36,34 @@ export default class AuthAction{
     };
   }
 
+  static RegisterUser(dispatch, email, pass, firstname, lastname) {
+    Firebase.RegisterUser(email, pass, firstname, lastname)
+      .then((user) => {
+        window.location.hash = "/";
+        dispatch(AuthAction.SetRegisterUser({ isLoading: false, error: undefined }));
+      }).catch((error) => {
+        console.error(error);
+        dispatch(AuthAction.SetRegisterUser({ isLoading: false, error }));
+      });
+      return {
+        type: 'REGISTER_USER',
+        payload: {
+          isLoading: true,
+          error: undefined,
+        }
+      };
+  }
+
+  static SetRegisterUser({ isLoading, error }) {
+    return {
+      type: 'REGISTER_USER',
+      payload: {
+        isLoading,
+        error,
+      },
+    };
+  }
+
   static Logout(dispatch) {
     Firebase.Logout()
       .then(user => (

@@ -1,3 +1,4 @@
+const firebase = require('./util/firebase');
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -58,6 +59,7 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+      firebase.default.UserserviceWorker(registration);
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {

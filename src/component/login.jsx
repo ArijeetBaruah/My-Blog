@@ -14,12 +14,17 @@ const { DEADLINK } = appContaints;
 class LoginComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: '',
+      password: '',
+    };
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
 
-  handleLoginSubmit() {
-    const email = document.getElementById('email').innerHTML;
-    const pass = document.getElementById('password').innerHTML;
+  handleLoginSubmit(e) {
+    e.preventDefault();
+    const email = this.state.email;
+    const pass = this.state.password;
     this.props.handleFormLogin(email, pass);
   }
 
@@ -27,7 +32,7 @@ class LoginComponent extends Component {
     return (
       <div className="container">
         <div className="row">
-          <Form className="col s6 offset-s3 loginForm">
+          <Form onSubmit={this.handleLoginSubmit} className="col s6 offset-s3 loginForm">
             <h1>Login</h1>
             <FormGroup>
               <Label htmlFor="email">Email</Label>
@@ -36,6 +41,9 @@ class LoginComponent extends Component {
                 id="email"
                 type="email"
                 className="validate"
+                onChange={(e) => this.setState({
+                  email: e.currentTarget.value,
+                })}
                 />
             </FormGroup>
             <FormGroup>
@@ -45,6 +53,9 @@ class LoginComponent extends Component {
                 id="password"
                 type="password"
                 className="validate"
+                onChange={(e) => this.setState({
+                  password: e.currentTarget.value,
+                })}
                 />
             </FormGroup>
             <div className="btnWrapper">
@@ -63,6 +74,16 @@ class LoginComponent extends Component {
                 onClick={this.props.handleGoogleLogin}
                 >
                 <i className="fab fa-google"></i> Login with Google
+              </a>
+            </div>
+            or
+            <div className="btnWrapper">
+              <a
+                href={DEADLINK}
+                className="btn btn-secondary"
+                onClick={() => {window.location.hash='/register';}}
+                >
+                Register
               </a>
             </div>
           </Form>

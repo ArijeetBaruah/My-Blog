@@ -22,7 +22,6 @@ class NavBarContainer extends Component{
 
   render() {
     const { user } = this.props.auth;
-    
     return (
       <NavBar
         Login={this.handleOnClickLogin}
