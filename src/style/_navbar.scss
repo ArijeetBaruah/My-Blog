@@ -1,7 +1,16 @@
+$break-small: 320px;
+$break-large: 1200px;
+
 // Styling for the navbar
 #mainNav {
   border-bottom: 1px solid fade-out($gray-900, .9);
   background-color: transparent;
+  @media screen and (max-width: $break-small) {
+    background-color: $white;
+  }
+  @media screen and (max-width: $break-large) {
+    background-color: $white;
+  }
   @include sans-serif-font;
   @include transition-all;
   .navbar-brand {
