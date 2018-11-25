@@ -9,7 +9,9 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 import appContaints from '../util/appContaints';
+import '../style/creative.scss';
 
 const { DEADLINK } = appContaints;
 
@@ -22,7 +24,8 @@ class NavBar extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      offsetY: window.pageYOffset,
     };
   }
 
@@ -32,6 +35,14 @@ class NavBar extends Component {
 
   Login(url) {
     this.props.Login(url);
+  }
+
+  componentDidMount() {
+    window.onscroll = () => {
+      this.setState({
+        offsetY: window.pageYOffset,
+      });
+    };
   }
 
   getLinks() {
@@ -70,8 +81,17 @@ class NavBar extends Component {
   }
 
   render() {
+    const navClass = (this.state.offsetY !== 0 && this.props.home) ? 'navbar-shrink' : (
+      this.props.home ? '' : 'navbar-shrink'
+    );
     return (
-      <Navbar color="dark" dark expand="md">
+      <Navbar
+        className={navClass}
+        light
+        id="mainNav"
+        fixed={this.props.home ? 'top' : ''}
+        expand="md"
+        >
         <NavbarBrand
           href={DEADLINK}
           onClick={()=>{
@@ -90,4 +110,9 @@ class NavBar extends Component {
       );
   }
 }
+
+NavBar.propTypes = {
+  home: PropTypes.bool.isRequired,
+};
+
 export default NavBar;

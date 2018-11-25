@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import NavBar from '../component/NavBar';
 import AuthAction from '../action/auth';
 
@@ -25,6 +26,7 @@ class NavBarContainer extends Component{
     const { user } = this.props.auth;
     return (
       <NavBar
+        home={this.props.home}
         Login={this.handleOnClickLogin}
         isLoading={user.isLoading}
         user={user.user}
@@ -43,5 +45,13 @@ const dispatchToProps = dispatch => ({
   onAuthStateChanged: () => dispatch(AuthAction.onAuthStateChanged(dispatch)),
   LoginAsAnonymous: () => dispatch(AuthAction.LoginAsAnonymous(dispatch)),
 });
+
+NavBarContainer.propTypes = {
+  home: PropTypes.bool,
+};
+
+NavBarContainer.defaultProps = {
+  home: false,
+};
 
 export default connect(stateToProps, dispatchToProps)(NavBarContainer);

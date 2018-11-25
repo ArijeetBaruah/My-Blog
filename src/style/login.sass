@@ -1,11 +1,30 @@
-.loginForm
-  width: 100%
-  height: auto
-  background-color: #e0e0e0
-  margin-top: 25px
-  text-align: center
-  align-content: center
-  .btnWrapper
-    margin-bottom: 25px
-.forgotBtn
-  margin-left: 20px
+@import "./creative.scss"
+
+.loginFormPage
+  background-color: $gray-400
+  .loginForm
+    width: 100%
+    height: auto
+    background-color: $white
+    margin-top: 25px
+    text-align: center
+    align-content: center
+    input.form-control
+      border-radius: 20px
+      &:hover
+        border-color: $primary
+        box-shadow: 5px 5px $primary
+      &:focus
+        border-color: $primary
+        box-shadow: 7px 7px $primary
+    h1
+      color: $primary
+      margin-top: 20px
+    .btnWrapper
+      margin-bottom: 25px
+      .btn
+        background: $primary
+        padding: 10px 30px
+        min-width: 50px
+  .forgotBtn
+    margin-left: 20px

@@ -47,7 +47,8 @@ class LoginComponent extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="loginFormPage">
+        <div className="container">
         {
           _.map(this.state.errors, (error) => (<Alert
             type={error.type}
@@ -129,6 +130,7 @@ class LoginComponent extends Component {
             </div>
           </Form>
         </div>
+      </div>
       </div>
     );
   }
