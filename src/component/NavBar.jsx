@@ -72,7 +72,14 @@ class NavBar extends Component {
   render() {
     return (
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarBrand
+          href={DEADLINK}
+          onClick={()=>{
+            window.location.hash="/";
+          }}
+          >
+          Home
+        </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>

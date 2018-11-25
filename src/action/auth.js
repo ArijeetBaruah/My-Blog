@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Firebase from '../util/firebase';
 
 export default class AuthAction{
@@ -11,6 +12,19 @@ export default class AuthAction{
       ));
     return {
       type: 'AUTH_GOOGLE_LOGIN',
+    }
+  }
+
+  static LoginAsAnonymous(dispatch) {
+    Firebase.LoginAsAnonymous()
+      .then((user) => {
+        dispatch(AuthAction.SetUser({ isLoading: false, data: user }));
+      })
+      .catch((error) => {
+        dispatch(AuthAction.SetUser({ isLoading: false, error }))
+      });
+    return {
+      type: 'AUTH_LOGIN_ANONYMOUS',
     }
   }
 
@@ -29,10 +43,43 @@ export default class AuthAction{
 
   static onAuthStateChanged(dispatch) {
     Firebase.onAuthStateChanged((user) => {
-      dispatch(AuthAction.SetUser({data: user}));
+      if (_.isEmpty(user)) {
+        dispatch(AuthAction.LoginAsAnonymous(dispatch));
+        return;
+      }
+      dispatch(AuthAction.SetUser({isLoading: false, data: user}));
     });
     return {
       type: 'AUTH_STATE_CHANGE',
+    };
+  }
+
+  static ForgotPassword(dispatch, email) {
+    Firebase.UserPasswordReset(email)
+      .then(() => {
+        dispatch(AuthAction.ForgotPasswordSuccess())
+      })
+      .catch(error => {
+        dispatch(AuthAction.ForgotPasswordFailed(error))
+      });
+    
+    return {
+      type: 'FORGOT_PASSWORD',
+    };
+  }
+
+  static ForgotPasswordSuccess() {
+    return {
+      type: 'FORGOT_PASSWORD_SUCCESS',
+    };
+  }
+
+  static ForgotPasswordFailed(error) {
+    return {
+      type: 'FORGOT_PASSWORD_FAILED',
+      payload: {
+        error
+      },
     };
   }
 

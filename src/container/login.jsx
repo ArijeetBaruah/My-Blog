@@ -23,6 +23,7 @@ class LoginContainer extends Component {
       <LoginComponent
         handleGoogleLogin={this.handleGoogleLogin}
         handleFormLogin={this.handleFormLogin}
+        user={this.props.auth.user}
         />
     );
   }

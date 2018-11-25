@@ -8,6 +8,7 @@ import Login from '../container/login';
 import ProjectDetail from './project_detail';
 import SignUp from '../container/signup';
 import firebase from '../util/firebase';
+import ForgotPasswordContainer from '../container/forgot_password';
 
 class App extends Component {
   constructor(props){
@@ -65,6 +66,17 @@ class App extends Component {
                     <ProjectDetail
                       goBack={props.history.goBack}
                       id={props.match.params.id} />
+                  </>
+                )}
+                />
+              <Route
+                path="/forgotPassword"
+                component={(props) => (
+                  <>
+                    <NavBarContainer />
+                    <ForgotPasswordContainer
+                      goBack={props.history.goBack}
+                      />
                   </>
                 )}
                 />

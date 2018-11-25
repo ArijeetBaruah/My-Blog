@@ -16,6 +16,7 @@ class SignUpContainer extends Component {
   render() {
     return (
       <SignUpComponent
+        registerUser={this.props.auth.registerUser}
         handleLoginSubmit={this.handleLoginSubmit}
       />
     );

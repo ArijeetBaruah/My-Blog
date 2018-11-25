@@ -7,8 +7,9 @@ class NavBarContainer extends Component{
   constructor(props) {
     super(props);
     this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
-
-    props.onAuthStateChanged();
+    if (props.auth) {
+      props.onAuthStateChanged();
+    }
   }
 
   handleOnClickLogin(url){
@@ -40,6 +41,7 @@ const dispatchToProps = dispatch => ({
   LoginViaGoogle: () => dispatch(AuthAction.LoginViaGoogle(dispatch)),
   Logout: () => dispatch(AuthAction.Logout(dispatch)),
   onAuthStateChanged: () => dispatch(AuthAction.onAuthStateChanged(dispatch)),
+  LoginAsAnonymous: () => dispatch(AuthAction.LoginAsAnonymous(dispatch)),
 });
 
 export default connect(stateToProps, dispatchToProps)(NavBarContainer);

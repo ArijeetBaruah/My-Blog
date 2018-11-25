@@ -33,6 +33,14 @@ export default class Firebase {
     return firebase.auth().signInWithEmailAndPassword(email, pass);
   }
 
+  static LoginAsAnonymous() {
+    return firebase.auth().signInAnonymously();
+  }
+
+  static UserPasswordReset(email) {
+    return firebase.auth().sendPasswordResetEmail(email);
+  }
+
   static RegisterUser(email, password, firstname, lastname) {
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {

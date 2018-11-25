@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style/login.sass';
+import _ from 'lodash';
 import {
   Form,
   FormGroup,
   Label,
   Input
 } from 'reactstrap';
+import '../style/login.sass';
 import appContaints from '../util/appContaints';
+import Alert from './alert';
 
 const { DEADLINK } = appContaints;
 
@@ -27,7 +29,6 @@ class SignUpComponent extends Component {
 
   handleLoginSubmit(e) {
     e.preventDefault();
-    console.log("fdsfds");
     let formIsValid = true;
     const error = [];
     const email = this.state.email;
@@ -41,29 +42,35 @@ class SignUpComponent extends Component {
       formIsValid = false;
     }
 
-    const emailFormat = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
-    const emailTest = new RegExp(emailFormat);
-    if (!emailTest.test(email)) {
-      error['email'] = 'incorrect email format';
-      formIsValid = false;
-    }
-
     if (formIsValid) {
       this.props.handleLoginSubmit(email, pass, firstname, lastname);
       return;
     }
-    console.log(error);
     this.setState({
       error,
     });
   }
 
+  renderError() {
+    return _.map(this.state.error, (error) => (
+      <Alert
+          type={Alert.Danger}
+          msg={error}
+          />
+    ));
+  }
+
   render() {
-    if (this.state.error.length !== 0) {
-      console.log(this.state.error);
-    }
     return (
       <div className="container">
+        {this.renderError()}
+        {
+          this.props.registerUser.error &&
+          <Alert
+            type={Alert.Danger}
+            msg={this.props.registerUser.error.message}
+            />
+        }
         <div className="row">
           <Form onSubmit={this.handleLoginSubmit} className="col s6 offset-s3 loginForm">
             <h1>Register</h1>
