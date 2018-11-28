@@ -41,6 +41,11 @@ export default class Firebase {
     return firebase.auth().sendPasswordResetEmail(email);
   }
 
+  static getUserDetail(userID) {
+    const userRef = firebase.database().ref().child('user/');
+    return userRef.orderByChild('uid').equalTo(userID).once('value');
+  }
+
   static RegisterUser(email, password, firstname, lastname) {
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
@@ -49,7 +54,7 @@ export default class Firebase {
             console.log("sending mail verification");
           });
         const userRef = firebase.database().ref().child('user/');
-        userRef.set({
+        userRef.push({
           uid: user.user.uid,
           firstname,
           lastname,

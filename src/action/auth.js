@@ -30,9 +30,10 @@ export default class AuthAction{
 
   static LoginViaForm(dispatch, user, pass) {
     Firebase.LoginViaForm(user, pass)
-      .then(user => (
-        dispatch(AuthAction.SetUser({ isLoading: false, data: user }))
-      ))
+      .then(user => {
+        dispatch(AuthAction.SetUser({ isLoading: false, data: user }));
+        dispatch(AuthAction.GetUserDetail(dispatch, user.user.Q.uid));
+      })
       .catch(error => (
         dispatch(AuthAction.SetUser({ isLoading: false, error }))
       ));
@@ -48,6 +49,7 @@ export default class AuthAction{
         return;
       }
       dispatch(AuthAction.SetUser({isLoading: false, data: user}));
+      dispatch(AuthAction.GetUserDetail(dispatch, user.uid));
     });
     return {
       type: 'AUTH_STATE_CHANGE',
@@ -133,5 +135,45 @@ export default class AuthAction{
         error,
       },
     }
+  }
+
+  static SetUserFailed({ isLoading, error }){
+    return {
+      type: 'SET_AUTH_USER_FAILED',
+      payload: {
+        isLoading,
+        error,
+      },
+    }
+  }
+
+  static GetUserDetail(dispatch, userID) {
+    Firebase.getUserDetail(userID)
+      .then(user => dispatch(AuthAction.SetUserDetail({isLoading: false, data: user.val()})))
+      .catch(error => dispatch(AuthAction.SetUserDetailFailed({isLoading: false, error})));
+    return{
+      type: 'FETCH_USER_DETAILS',
+    }
+   }
+
+  static SetUserDetail({ isLoading, data, error }) {
+    return {
+      type: 'SET_USER_DETAILS',
+      payload: {
+        isLoading,
+        data,
+        error
+      },
+    };
+  }
+
+  static SetUserDetailFailed({ isLoading, error }) {
+    return {
+      type: 'SET_USER_DETAILS_FAILED',
+      payload: {
+        isLoading,
+        error
+      },
+    };
   }
 }

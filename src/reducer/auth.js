@@ -5,6 +5,11 @@ const initState = {
     isLoading: true,
     user: undefined,
     error: undefined,
+    details: {
+      isLoading: false,
+      sended: false,
+      error: null,
+    },
   },
   registerUser: {
     isLoading: true,
@@ -23,7 +28,14 @@ const authReducer = (state = initState, action) => {
       const tmpState = _.assign({}, state);
       const { payload } = action;
       tmpState.user.isLoading = payload.isLoading;
-      tmpState.user.user = payload.data;
+      tmpState.user.user = payload.user;
+      tmpState.user.error = payload.error;
+      return tmpState;
+    }
+    case 'SET_AUTH_USER_FAILED': {
+      const tmpState = _.assign({}, state);
+      const { payload } = action;
+      tmpState.user.isLoading = payload.isLoading;
       tmpState.user.error = payload.error;
       return tmpState;
     }
@@ -59,6 +71,19 @@ const authReducer = (state = initState, action) => {
       tmpState.forgotPassword.isLoading = false;
       tmpState.forgotPassword.sended = false;
       tmpState.forgotPassword.error = payload.error;
+      return tmpState;
+    }
+    case 'SET_USER_DETAILS': {
+      const tmpState = _.assign({}, state);
+      const { payload } = action;
+      tmpState.user.details = _.assign({}, payload);
+      return tmpState;
+    }
+    case 'SET_USER_DETAILS_FAILED': {
+      const tmpState = _.assign({}, state);
+      const { payload } = action;
+      tmpState.user.details.isLoading = payload.isLoading;
+      tmpState.user.details.error = payload.error;
       return tmpState;
     }
     default: {
