@@ -34,25 +34,25 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                component={() => (
+                component={props => (
                   <>
-                    <NavBarContainer home={true} />
+                    <NavBarContainer history={props.history} home={true} />
                     <Home />
                   </>
                 )}
                 />
               <Route
                 path="/login"
-                component={() => (
+                component={props => (
                   <>
-                    <NavBarContainer />
+                    <NavBarContainer history={props.history} />
                     <Login />
                   </>
                 )}
                 />
               <Route
                 path="/register"
-                component={() => (
+                component={props => (
                   <>
                     <NavBarContainer />
                     <SignUp />
@@ -63,7 +63,7 @@ class App extends Component {
                 path="/project/:id"
                 component={(props) => (
                   <>
-                    <NavBarContainer />
+                    <NavBarContainer history={props.history}/>
                     <ProjectDetail
                       goBack={props.history.goBack}
                       id={props.match.params.id} />
@@ -74,7 +74,7 @@ class App extends Component {
                 path="/forgotPassword"
                 component={(props) => (
                   <>
-                    <NavBarContainer />
+                    <NavBarContainer history={props.history}/>
                     <ForgotPasswordContainer
                       goBack={props.history.goBack}
                       />
@@ -82,9 +82,9 @@ class App extends Component {
                 )}
                 />
               <Route
-                component={() => (
+                component={props => (
                   <>
-                    <NavBarContainer />
+                    <NavBarContainer history={props.history}/>
                     <NotFound />
                   </>
                 )}

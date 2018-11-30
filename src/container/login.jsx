@@ -23,6 +23,7 @@ class LoginContainer extends Component {
       <LoginComponent
         handleGoogleLogin={this.handleGoogleLogin}
         handleFormLogin={this.handleFormLogin}
+        LoginViaGithub={this.props.LoginViaGithub}
         user={this.props.auth.user}
         />
     );
@@ -36,6 +37,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   LoginViaGoogle: () => dispatch(AuthAction.LoginViaGoogle(dispatch)),
   LoginViaForm: (user, password) => dispatch(AuthAction.LoginViaForm(dispatch, user, password)),
+  LoginViaGithub: () => dispatch(AuthAction.LoginViaGithub(dispatch)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

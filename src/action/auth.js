@@ -4,27 +4,15 @@ import Firebase from '../util/firebase';
 export default class AuthAction{
   static LoginViaGoogle(dispatch) {
     Firebase.LoginViaGoogle()
-      .then(user => (
-        dispatch(AuthAction.SetUser({ isLoading: false, data: user }))
-      ))
+      .then(user => {
+        dispatch(AuthAction.SetUser({ isLoading: false, data: user }));
+        dispatch(AuthAction.GetUserDetail(dispatch, user.uid));
+      })
       .catch(error => (
         dispatch(AuthAction.SetUser({ isLoading: false, error }))
       ));
     return {
       type: 'AUTH_GOOGLE_LOGIN',
-    }
-  }
-
-  static LoginAsAnonymous(dispatch) {
-    Firebase.LoginAsAnonymous()
-      .then((user) => {
-        dispatch(AuthAction.SetUser({ isLoading: false, data: user }));
-      })
-      .catch((error) => {
-        dispatch(AuthAction.SetUser({ isLoading: false, error }))
-      });
-    return {
-      type: 'AUTH_LOGIN_ANONYMOUS',
     }
   }
 
@@ -44,12 +32,10 @@ export default class AuthAction{
 
   static onAuthStateChanged(dispatch) {
     Firebase.onAuthStateChanged((user) => {
-      if (_.isEmpty(user)) {
-        dispatch(AuthAction.LoginAsAnonymous(dispatch));
-        return;
-      }
       dispatch(AuthAction.SetUser({isLoading: false, data: user}));
-      dispatch(AuthAction.GetUserDetail(dispatch, user.uid));
+      if (!_.isEmpty(user)) {
+        dispatch(AuthAction.GetUserDetail(dispatch, user.uid));
+      }
     });
     return {
       type: 'AUTH_STATE_CHANGE',
@@ -175,5 +161,11 @@ export default class AuthAction{
         error
       },
     };
+  }
+
+  static LoginViaGithub(dispatch) {
+    Firebase.LoginViaGithub()
+      .then(user => dispatch(AuthAction.SetUser({ isLoading: false, data: user, error: null })))
+      .catch(error => dispatch(AuthAction.SetUserFailed({ error, isLoading: false })));
   }
 }

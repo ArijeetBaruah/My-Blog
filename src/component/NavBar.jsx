@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import _ from 'lodash';
 import {
   Collapse,
   Navbar,
@@ -30,7 +31,7 @@ class NavBar extends Component {
   }
 
   handleOnClick(url) {
-    window.location.hash = url;
+    this.props.history(url);
   }
 
   Login(url) {
@@ -43,6 +44,17 @@ class NavBar extends Component {
         offsetY: window.pageYOffset,
       });
     };
+  }
+
+  getUserInicials() {
+    let userDetail = null;
+    if (this.props.user.details.data) {
+      _.each(this.props.user.details.data, (user) => {
+        userDetail = user;
+      });
+      return `${_.first(userDetail.firstname)}${_.first(userDetail.lastname)}`;
+    }
+    return '';
   }
 
   getLinks() {
@@ -63,12 +75,22 @@ class NavBar extends Component {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink
-            href={DEADLINK}
-            onClick={() => this.Login('/login')}
-            >
-            {!user? 'Login' : 'Logout'}
-          </NavLink>
+          {
+            !user.user ?
+            <NavLink
+              href={DEADLINK}
+              onClick={() => this.Login('/login')}
+              >
+              Login
+            </NavLink>
+            :
+            <NavLink
+              href={DEADLINK}
+              onClick={() => this.Login('/login')}
+              >
+              Logout
+            </NavLink>
+          }
         </NavItem>
       </Fragment>  
     );
@@ -113,6 +135,7 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   home: PropTypes.bool.isRequired,
+  history: PropTypes.shape({}).isRequired,
 };
 
 export default NavBar;

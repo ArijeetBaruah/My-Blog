@@ -19,7 +19,7 @@ class NavBarContainer extends Component{
       this.props.Logout();
       return;
     }
-    window.location.hash = url;
+    this.props.history.push(url);
   }
 
   render() {
@@ -29,7 +29,8 @@ class NavBarContainer extends Component{
         home={this.props.home}
         Login={this.handleOnClickLogin}
         isLoading={user.isLoading}
-        user={user.user}
+        user={user}
+        history={this.props.history}
         />
     );
   }
@@ -48,6 +49,7 @@ const dispatchToProps = dispatch => ({
 
 NavBarContainer.propTypes = {
   home: PropTypes.bool,
+  history: PropTypes.shape({}).isRequired,
 };
 
 NavBarContainer.defaultProps = {

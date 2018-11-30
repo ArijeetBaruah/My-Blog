@@ -33,8 +33,9 @@ export default class Firebase {
     return firebase.auth().signInWithEmailAndPassword(email, pass);
   }
 
-  static LoginAsAnonymous() {
-    return firebase.auth().signInAnonymously();
+  static LoginViaGithub() {
+    const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+    return firebase.auth().signInWithPopup(githubAuthProvider);
   }
 
   static UserPasswordReset(email) {

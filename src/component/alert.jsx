@@ -31,7 +31,7 @@ class Alert extends Component{
 
     const ClassStr = `alert ${this.props.type} alert-dismissible`;
     return (
-      <div class={ClassStr}>
+      <div className={ClassStr}>
         {this.props.msg}
         <button type="button" className="close" onClick={() => {
           this.setState({

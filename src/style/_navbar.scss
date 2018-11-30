@@ -25,7 +25,7 @@ $break-large: 1200px;
   }
   .navbar-nav {
     > li.nav-item {
-       > a.nav-link,
+      > a.nav-link,
       > a.nav-link:focus {
         font-size: .9rem;
         font-weight: 700;
@@ -43,6 +43,9 @@ $break-large: 1200px;
         }
       }
     }
+  }
+  .toggle {
+    padding: 5px;
   }
   @media (min-width: 992px) {
     border-color: transparent;
