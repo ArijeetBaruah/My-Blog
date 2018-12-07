@@ -376,6 +376,10 @@ module.exports = {
       fileName: 'asset-manifest.json',
       publicPath: publicPath,
     }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
     // TypeScript type checking
     useTypeScript &&
       new ForkTsCheckerWebpackPlugin({

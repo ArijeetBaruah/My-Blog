@@ -31,7 +31,7 @@ class NavBar extends Component {
   }
 
   handleOnClick(url) {
-    this.props.history(url);
+    this.props.history.push(url);
   }
 
   Login(url) {

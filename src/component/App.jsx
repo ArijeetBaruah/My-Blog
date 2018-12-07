@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import NavBarContainer from '../container/navbar';
 import store from '../store';
@@ -10,6 +10,7 @@ import SignUp from '../container/signup';
 import firebase from '../util/firebase';
 import NotFound from './notfound';
 import ForgotPasswordContainer from '../container/forgot_password';
+import CreateProject from '../component/CreateProject';
 
 class App extends Component {
   constructor(props){
@@ -56,6 +57,15 @@ class App extends Component {
                   <>
                     <NavBarContainer />
                     <SignUp />
+                  </>
+                )}
+                />
+              <Route
+                path="/create/project"
+                component={(props) => (
+                  <>
+                    <NavBarContainer history={props.history}/>
+                    <CreateProject />
                   </>
                 )}
                 />
